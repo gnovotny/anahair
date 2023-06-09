@@ -1,4 +1,3 @@
-// mostly from https://gist.github.com/statico/df64c5d167362ecf7b34fca0b1459a44
 varying vec2 vUv;
 uniform vec2 scale;
 uniform vec2 imageBounds;
@@ -44,10 +43,6 @@ float map2(float value, float min1, float max1, float min2, float max2)
     return min2+(value-min1)*(max2-min2)/(max1-min1);
 }
 
-//vec4 LinearTosRGB( in vec4 value ) {
-//    return vec4( mix( pow( value.rgb, vec3( 0.41666 ) ) * 1.055 - vec3( 0.055 ), value.rgb * 12.92, vec3( lessThanEqual( value.rgb, vec3( 0.0031308 ) ) ) ), value.a );
-//}
-
 void main() {
     vec2 s = aspect(scale);
     vec2 i = aspect(imageBounds);
@@ -56,12 +51,7 @@ void main() {
     vec2 new = rs < ri ? vec2(i.x * s.y / i.y, s.y) : vec2(s.x, i.y * s.x / i.x);
     vec2 offset = (rs < ri ? vec2((new.x - s.x) / 2.0, 0.0) : vec2(0.0, (new.y - s.y) / 2.0)) / new;
     vec2 uv = vUv * s / new + offset;
-//    vec2 zUv = (uv - vec2(0.5, 0.5)) + vec2(0.5, 0.5);
     vec2 zUv = uv;
-
-//    if (scrollProgress > 0.3333) {
-//        zUvParallax.y += 1.-clamp(map2(scrollProgress, 0., 0.3333, 0.5, 1.), 0.5, 1.);
-//    }
 
     float localZoom=clamp(map2(scrollProgress, 0.3333, 0.6666, zoom, 1.), 1., zoom);
     float localGrayscale=clamp(map2(scrollProgress, 0.3333, 0.6666, 1., 0.), 0., 1.);
@@ -92,10 +82,6 @@ void main() {
         }
     }
 
-//    if (scrollProgress > 0.6666) {
-//        zUvParallax = vec2(zUv.x, zUv.y-clamp(map2(scrollProgress, 0.6666, 1., 0., 0.5), 0., 0.5));
-//    }
-
     vec4 comp;
 
     if (useDepthMap) {
@@ -105,12 +91,6 @@ void main() {
     } else {
         comp = texture2D(map, zUvParallax) * vec4(color, opacity);
     }
-
-
-
-//    vec4 comp = toGrayscale(texture2D(map, mirrored(fake3d)) * vec4(color, opacity), localGrayscale);
-//    vec4 comp = texture2D(map, mirrored(fake3d)) * vec4(color, opacity);
-//    vec4 comp = texture2D(map, zUvParallax);
 
     vec4 sRGBComp = linearToOutputTexel(comp);
     comp = vec4(mix(comp.r, sRGBComp.r, sRGBEncodingProgress), mix(comp.g, sRGBComp.g, sRGBEncodingProgress), mix(comp.b, sRGBComp.b, sRGBEncodingProgress), comp.a);
@@ -130,10 +110,4 @@ void main() {
     vec4 maskTexture=texture2D(maskMap, maskCoords);
 
     gl_FragColor = mix(vec4(0,0,0,0), comp, smoothstep(0.4,0.6,maskTexture.r));
-//    gl_FragColor = comp;
-
-//    gl_FragColor = linearToOutputTexel( gl_FragColor );
-
-//    #include <tonemapping_fragment>
-//    #include <encodings_fragment>
 }

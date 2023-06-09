@@ -33,6 +33,7 @@ Employed libraries include:
 - [ ] portal element: fix faux-3d effect on pointer move
 - [ ] footer element: mobile browser navigation bars scrolling issue
 - [ ] performance improvements
+- [ ] refactor frag shader
 
 ## Running Locally
 
