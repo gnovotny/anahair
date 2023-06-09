@@ -20,17 +20,19 @@ Employed libraries include:
 
 ## Features
 
-- Custom WebGL shader (portal element)
-- sporadic use of pure CSS animations
+- custom WebGL frag shader [frag shader](./src/components/layout/views/portal/scene/shaders/fragment.glsl)
+- sporadic use of pure CSS for non-trivial animations
+- tracks DOM elements and draws Three.js objects in their place using [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig)
+- Opinionated lint config:
+  - no semicolons
+  - jsx: single attribute per line
 
-## Related
-
-- Alternative design variant (early prototype): [https://anahair-proto-2023-alt-design.vercel.app/](https://anahair-proto-2023-alt-design.vercel.app/)
 
 ## TODO
 
-- [ ] Performance improvements
-- [ ] addendum block: mobile browser navigation bars scrolling issue
+- [ ] portal element: fix faux-3d effect on pointer move
+- [ ] footer element: mobile browser navigation bars scrolling issue
+- [ ] performance improvements
 
 ## Running Locally
 
@@ -42,16 +44,13 @@ cd anahair
 yarn install
 yarn dev
 ```
+## Related
+
+- Alternative design variant (early prototype): [https://anahair-proto-2023-alt-design.vercel.app/](https://anahair-proto-2023-alt-design.vercel.app/)
 
 ## Acknowledgements
 
 - Modded version of [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig) included in the source code
-
-## Code style
-
-Opinionated lint config that includes:
-- no semicolons
-- jsx: single attribute per line
 
 ## Authors
 
