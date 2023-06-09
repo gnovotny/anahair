@@ -1,0 +1,62 @@
+.root {
+  @apply fixed h-full invisible flex md:hidden items-center inset-0 z-40 justify-center ease-linear duration-[0ms] delay-[1200ms];
+
+  & .inner {
+    @apply relative w-full min-h-full h-[inherit] overflow-y-scroll flex flex-row items-end landscape:items-baseline md:landscape:items-end md:items-end px-7 sm:px-10 pt-[calc(var(--navbar-height)*2+1.75rem)] pb-7 sm:pb-10
+    opacity-0 transition-opacity duration-[600ms] bg-tertiary text-primary delay-[600ms];
+
+    & .primary {
+      @apply flex flex-col items-start w-full space-y-7 md:space-y-4;
+
+      & .item {
+        @apply relative opacity-0 transition-opacity duration-300;
+
+        &.first {
+          @apply delay-300;
+        }
+
+        &.second {
+          @apply delay-[350ms];
+        }
+
+        &.third {
+          @apply delay-[400ms];
+        }
+      }
+    }
+  }
+
+
+  &.open {
+    @apply visible delay-[0s];
+
+    & .inner {
+      @apply opacity-100 delay-[0s];
+
+      & .primary {
+        & .item {
+          @apply delay-[0s] opacity-100 transition-opacity;
+
+          &.first {
+            transition-delay: 0.3s;
+            transition-property: opacity;
+          }
+
+          &.second {
+            transition-delay: 0.35s;
+            transition-property: opacity;
+          }
+
+          &.third {
+            transition-delay: 0.4s;
+            transition-property: opacity;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+

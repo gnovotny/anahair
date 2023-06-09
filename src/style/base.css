@@ -1,0 +1,104 @@
+:root {
+  --primary: var(--pearly-white);
+  --secondary: var(--repose-gray);
+  --tertiary: var(--debonair);
+  --quaternary: var(--naval);
+  --quinary: var(--dovetail-lighter);
+  --text-primary: var(--naval);
+  --text-secondary: var(--pearly-white);
+  --text-tertiary: var(--repose-gray);
+  --text-quaternary: var(--debonair);
+  --text-quinary: var(--quinary);
+  --text-special: #676767;
+  --text-link: var(--naval);
+  --selection: var(--pearly-white);
+  --selection-bg: var(--naval);
+
+  --repose-gray: #cccac0;
+  --pearly-white: #ede3d8;
+  --debonair: #8da0a8;
+  --naval: #233347;
+  --dovetail: #928b81;
+  --dovetail-lighter: #aba9a5;
+
+  --font-apercu: 'apercu', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
+  'Helvetica', sans-serif;
+  --font-reckless: 'reckless', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
+  'Helvetica', sans-serif;
+
+  --font-serif: var(--font-reckless);
+  --font-sans: var(--font-apercu);
+  --font-heading: var(--font-serif);
+
+  --navbar-height: 5rem;
+  --max-width-page: 2460px;
+}
+
+@media (orientation: landscape) {
+  :root {
+    --navbar-height: 4rem;
+  }
+}
+
+@screen md {
+  :root {
+    --navbar-height: 6rem;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100%;
+  box-sizing: border-box;
+  touch-action: manipulation;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary);
+  color: var(--text-primary);
+  overscroll-behavior-x: none;
+}
+
+html {
+  scrollbar-width: none !important;
+}
+
+body {
+  position: relative;
+  margin: 0 auto !important;
+  max-width: var(--max-width-page);
+
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+main {
+  background-color: var(--primary);
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+::selection {
+  color: var(--selection);
+  background: var(--selection-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1;
+}
+
+

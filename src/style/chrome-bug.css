@@ -1,0 +1,26 @@
+/**
+ * Chrome has a bug with transitions on load since 2012!
+ *
+ * To prevent a "pop" of content, you have to disable all transitions until
+ * the page is done loading.
+ *
+ * https://lab.laukstein.com/bug/input
+ * https://twitter.com/timer150/status/1345217126680899584
+ */
+body.loading * {
+  transition: none !important;
+  animation: none !important;
+}
+
+body {
+  &::after {
+    content: '';
+    @apply w-screen h-screen fixed inset-0 bg-primary z-[999] pointer-events-none opacity-0 transition-opacity will-change-[opacity];
+  }
+}
+
+body.loading {
+  &::after {
+    @apply opacity-100;
+  }
+}

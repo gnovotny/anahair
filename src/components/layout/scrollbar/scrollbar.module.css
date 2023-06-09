@@ -1,0 +1,22 @@
+.scrollbar {
+  @apply hidden md:block z-[100] fixed right-[3px] top-0 w-[11px] h-full !opacity-100 transition-[opacity,transform] will-change-[opacity,transform] duration-300 origin-right pointer-events-none md:pointer-events-auto;
+  contain: strict;
+
+  &:hover,
+  .has-scroll-dragging & {
+    @apply scale-x-125;
+  }
+
+  .inner {
+    @apply h-full relative;
+  }
+}
+
+.thumb {
+  @apply absolute top-0 right-0 bg-white opacity-50 w-[7px] rounded-[10px] m-[2px] cursor-grab transition-[height] duration-300 min-h-[10rem] will-change-transform;
+  contain: strict;
+
+  .has-scroll-dragging & {
+    @apply cursor-grabbing;
+  }
+}

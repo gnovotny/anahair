@@ -1,0 +1,8 @@
+.gm-style > div:first-child {
+  background-color: #000000;
+}
+
+/* https://stackoverflow.com/questions/69027683/react-google-maps-api-googlemap-onclick-not-working */
+.gm-style-moc {
+  height: unset !important;
+}

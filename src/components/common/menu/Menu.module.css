@@ -1,0 +1,181 @@
+.root {
+  @apply fixed invisible h-full flex md:hidden items-center inset-0 z-40 justify-center ease-linear duration-[0ms] delay-[1200ms];
+
+  & .nav {
+    @apply relative w-full min-h-full h-[inherit] overflow-y-scroll flex flex-row items-end landscape:items-baseline md:landscape:items-end md:items-end  justify-between px-7 pt-[calc(var(--navbar-height)*2+1.75rem)] pb-7
+    opacity-0 transition-opacity duration-[600ms] bg-quaternary text-secondary delay-[600ms];
+/*    @apply  backdrop-blur-xl*/
+
+    & .main {
+      @apply flex flex-col items-start space-y-2 md:space-y-4;
+
+      &:hover {
+        & .link .label {
+          @apply opacity-20;
+        }
+      }
+
+      & .link {
+        @apply flex-1 flex w-full relative
+        opacity-0 transition-opacity duration-300 lowercase;
+
+        &.first {
+          @apply delay-300;
+        }
+
+        &.second {
+          @apply delay-[350ms];
+        }
+
+        &.third {
+          @apply delay-[400ms];
+        }
+
+        &.fourth {
+          @apply delay-[450ms];
+        }
+
+        &.fifth {
+          @apply delay-[500ms];
+        }
+
+        &.sixth {
+          @apply delay-[550ms];
+        }
+
+        & .label {
+          @apply relative transition-opacity duration-300
+          text-3xl md:text-5xl font-bold leading-none;
+        }
+
+        &:hover {
+          & .label {
+            @apply opacity-100;
+          }
+        }
+
+      }
+
+    }
+
+    & .secondary {
+      @apply flex flex-col items-start space-y-1 md:space-y-2;
+
+      &:hover {
+        & .link .label {
+          @apply opacity-20;
+        }
+      }
+
+      & .link {
+        @apply flex-1 flex w-full relative
+        opacity-0 transition-opacity duration-300;
+
+        &.disabled {
+          @apply !opacity-20 cursor-not-allowed;
+        }
+
+        &.first {
+          @apply delay-300;
+        }
+
+        &.second {
+          @apply delay-[350ms];
+        }
+
+        &.third {
+          @apply delay-[400ms];
+        }
+
+        &.fourth {
+          @apply delay-[450ms];
+        }
+
+        &.fifth {
+          @apply delay-[500ms];
+        }
+
+        &.sixth {
+          @apply delay-[550ms];
+        }
+
+        & .label {
+          @apply relative transition-opacity duration-300
+          text-3xl md:text-5xl font-bold leading-none;
+        }
+
+        &:hover {
+          & .label {
+            @apply opacity-100;
+          }
+        }
+
+      }
+    }
+  }
+
+
+  &.open {
+    @apply visible delay-[0s];
+
+    & .nav {
+      @apply opacity-100 delay-[0s];
+
+      & .main {
+        & .link {
+          @apply delay-[0s] opacity-100 transition-opacity;
+
+          &.first {
+            transition-delay: 0.3s;
+          }
+
+          &.second {
+            transition-delay: 0.35s;
+          }
+
+          &.third {
+            transition-delay: 0.4s;
+          }
+
+          &.fourth {
+            transition-delay: 0.45s;
+          }
+
+          &.fifth {
+            transition-delay: 0.5s;
+          }
+
+          &.sixth {
+            transition-delay: 0.55s;
+          }
+        }
+      }
+
+      & .secondary {
+        & .link {
+          @apply delay-[0s] opacity-100;
+
+          &.first {
+            transition-delay: 0.3s;
+            transition-property: opacity;
+          }
+
+          &.second {
+            transition-delay: 0.35s;
+            transition-property: opacity;
+          }
+
+          &.third {
+            transition-delay: 0.4s;
+            transition-property: opacity;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
+
+

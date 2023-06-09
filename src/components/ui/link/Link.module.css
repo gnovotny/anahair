@@ -1,0 +1,67 @@
+
+.root {
+
+  @apply inline-table relative;
+
+  &.underlined {
+    @apply underline md:no-underline;
+  }
+
+  &.active,
+  &:hover {
+    & .line {
+      &::before {
+        transform: translate3d(102%,0,0);
+        transition: transform 800ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      &::after {
+        transform: translate3d(0,0,0);
+        transition: transform 800ms cubic-bezier(0.23, 1, 0.32, 1) 200ms;
+      }
+    }
+  }
+
+}
+
+.line {
+
+  @apply hidden md:block absolute h-full inset-0 overflow-x-clip pointer-events-none will-change-transform scale-x-100 origin-left;
+
+
+/*  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transfrom;
+  transform-origin: left center;
+  !*transform: scaleX(0);*!
+  transform: scaleX(1);*/
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: currentColor;
+    will-change: transform;
+
+    /*bottom: 5px;*/
+    bottom: 0.25rem;
+    height: 1px;
+  }
+
+  &::before {
+    transition: transform 800ms cubic-bezier(0.23, 1, 0.32, 1) 200ms;
+  }
+
+  &::after {
+    transform: translate3d(-102%,0,0);
+    transition: transform 800ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+
+}

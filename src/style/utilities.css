@@ -1,0 +1,52 @@
+@tailwind utilities;
+
+@layer utilities {
+
+  .contain-strict {
+    contain: strict;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif) !important;
+  }
+
+  .font-sans {
+    font-family: var(--font-sans) !important;
+  }
+
+  .h-navbar {
+    @apply h-[var(--navbar-height)]
+  }
+
+  .fit-nav-h {
+    @apply h-[calc(100vh-var(--navbar-height,6rem))]
+  }
+
+  .fit-nav-h-min {
+    @apply h-[calc(100vh-var(--navbar-height,6rem))]
+  }
+
+  .fit-landing-nav-pt {
+    @apply pt-[calc(var(--navbar-height)*2)] md:pt-[var(--navbar-height)];
+  }
+
+  .fit-expanded-nav-pt {
+    @apply pt-[calc(var(--navbar-height)*2)];
+  }
+
+  .fit-nav-pt {
+    @apply pt-[var(--navbar-height)];
+  }
+
+  .fit-expanded-title-nav-pt {
+    @apply pt-[calc(var(--navbar-height)*2)];
+  }
+
+  .max-w-page {
+    @apply max-w-[var(--max-width-page)]
+  }
+
+  .text-special {
+    @apply text-[color:var(--text-special)]
+  }
+}

@@ -1,0 +1,10 @@
+@tailwind base;
+@import 'fonts/index.css';
+@import 'base.css';
+
+@tailwind components;
+@import 'utilities.css';
+@import 'animations.css';
+@import 'lenis.css';
+@import 'misc.css';
+@import 'chrome-bug.css';
