@@ -23,7 +23,16 @@ module.exports = {
   extends: ['next', 'prettier', 'plugin:tailwind/recommended'],
   plugins: ['prettier', 'unused-imports'],
   rules: {
-    'prettier/prettier': 'warn',
+    'prettier/prettier': [
+      'warn',
+      {
+        jsxSingleQuote: true,
+        singleAttributePerLine: true,
+      },
+      {
+        usePrettierrc: true,
+      },
+    ],
     'import/order': ['warn', IMPORT_ORDER_CONFIG],
     'unused-imports/no-unused-imports': 'warn',
     'react/no-unescaped-entities': ['off'],
