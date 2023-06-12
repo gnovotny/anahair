@@ -54,9 +54,9 @@ const PortalWebGL = ({ imgEl, imgMobileEl, ...props }: Omit<PortalWebGLElementPr
       texture={texture}
       depthTexture={depthTexture}
       maskTexture={maskTexture}
-      withDepth={!isSmallScreen}
+      faux3D={!isSmallScreen}
       zoom={isSmallScreen && !isLandscapeScreen ? 2.0 : 1.5}
-      zoomCenter={isSmallScreen && !isLandscapeScreen ? [0.5, 0.2] : [0.5, 0.5]}
+      zoomOrigin={isSmallScreen && !isLandscapeScreen ? [0.5, 0.2] : [0.5, 0.5]}
       {...props}
     />
   )

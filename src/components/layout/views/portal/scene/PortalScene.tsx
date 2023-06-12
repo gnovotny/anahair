@@ -7,19 +7,15 @@ import { Mesh, ShaderMaterial, Color as ThreeColor, Texture } from 'three'
 import { ScrollSceneChildProps } from '@/components/scrollrig/components/ScrollScene'
 
 // import Mouse from './Mouse'
-import fragment from './shaders/fragment.glsl'
-import vertex from './shaders/vertex.glsl'
+import { fragment, vertex } from './shaders'
 
 export type PortalSceneProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   segments?: number
   scale?: number | [number, number]
   color?: Color
   zoom?: number
-  zoomCenter?: [number, number]
-  grayscale?: number
-  toneMapped?: boolean
-  transparent?: boolean
-  withDepth?: boolean
+  zoomOrigin?: [number, number]
+  faux3D?: boolean
   opacity?: number
 } & (
     | {
@@ -51,10 +47,8 @@ type PortalImageMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
   map: Texture
   depthMap?: Texture
   maskMap: Texture
-  portalMap?: Texture
   zoom?: number
-  zoomCenter?: number[]
-  grayscale?: number
+  zoomOrigin?: number[]
   useDepthMap?: boolean
 }
 
@@ -71,24 +65,20 @@ const PortalImageMaterialImpl = shaderMaterial(
     color: new ThreeColor('white'),
     scale: [1, 1],
     imageBounds: [1, 1],
-    map: null,
-    depthMap: null,
-    zoom: 1.5,
-    zoomCenter: [0.5, 0.5],
-    grayscale: 0,
     opacity: 1,
 
-    mousePosition: [0, 0],
-    fake3dThreshold: [65, 80],
-    uTime: 0,
-
-    maskProgress: 0,
-    maskIdle: 0,
-    maskMaxScale: 7,
+    map: null,
+    depthMap: null,
     maskMap: null,
-    portalMap: null,
 
-    scrollProgress: 0,
+    zoom: 1.5,
+    zoomOrigin: [0.5, 0.5],
+    faux3dThreshold: [65, 80],
+    maskMaxScale: 7,
+
+    mousePosition: [0, 0],
+    time: 0,
+    progress: 0,
   },
   vertex,
   fragment
@@ -101,16 +91,13 @@ const PortalScene = forwardRef(
       segments = 1,
       scale = 1,
       zoom = 1.5,
-      zoomCenter = [0.5, 0.5],
-      grayscale = 0,
+      zoomOrigin = [0.5, 0.5],
       opacity = 1,
       texture,
       depthTexture,
       maskTexture,
       portalTexture,
-      toneMapped,
-      transparent = true,
-      withDepth = true,
+      faux3D = true,
       ...props
     }: Omit<PortalSceneProps, 'url'> & { scrollState?: ScrollSceneChildProps['scrollState'] },
     ref: ForwardedRef<Mesh>
@@ -132,7 +119,7 @@ const PortalScene = forwardRef(
       //   smoothY: Mouse.smoothY,
       // })
 
-      portalImageMaterialRef.current.uniforms.scrollProgress.value = props.scrollState?.progress ?? 0
+      portalImageMaterialRef.current.uniforms.progress.value = props.scrollState?.progress ?? 0
     })
 
     const handleMouseMove = (mouseCoords: any) => {
@@ -163,20 +150,14 @@ const PortalScene = forwardRef(
           map-colorSpace={gl.outputColorSpace}
           depthMap={depthTexture!}
           depthMap-colorSpace={gl.outputColorSpace}
-          useDepthMap={withDepth}
+          useDepthMap={faux3D}
           maskMap={maskTexture!}
           maskMap-colorSpace={gl.outputColorSpace}
-          // portalMap={portalTexture!}
-          // portalMap-colorSpace={gl.outputColorSpace}
           zoom={zoom}
-          zoomCenter={zoomCenter}
-          grayscale={grayscale}
+          zoomOrigin={zoomOrigin}
           opacity={opacity}
           scale={planeBounds}
           imageBounds={imageBounds}
-          toneMapped={toneMapped}
-          transparent={transparent}
-          // depthWrite={false}
         />
 
         {children}
