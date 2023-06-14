@@ -5,7 +5,7 @@ import { useRect } from '@/components/scrollrig/hooks/useRect'
 import { ScrollCallbackProps } from '@/components/scrollrig/scrollbar/SmoothScrollbar'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { useStore } from '@/lib/store'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 
 export type AddendumScrollCallback = (props: ScrollCallbackProps, thresholds: any) => void
 export const useAddendumScroll = (onScroll: AddendumScrollCallback) => {

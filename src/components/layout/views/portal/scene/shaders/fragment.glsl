@@ -2,22 +2,20 @@ varying vec2 vUv;
 uniform vec2 scale;
 uniform vec2 imageBounds;
 uniform vec3 color;
-uniform sampler2D map;
-uniform sampler2D depthMap;
-uniform bool useDepthMap;
-uniform float zoom;
-uniform vec2 zoomOrigin;
 uniform float opacity;
 
-uniform vec2 mousePosition;
-uniform vec2 faux3dThreshold;
-uniform float time;
-
-uniform float maskProgress;
-uniform float maskMaxScale;
-
+uniform sampler2D map;
+uniform sampler2D depthMap;
 uniform sampler2D maskMap;
 
+uniform bool faux3D;
+uniform float zoom;
+uniform vec2 zoomOrigin;
+uniform float maskMaxScale;
+uniform vec2 faux3dThreshold;
+
+uniform vec2 mousePosition;
+uniform float time;
 uniform float progress;
 
 vec2 mirrored(vec2 v) {
@@ -33,7 +31,6 @@ float mapLinear(float value, float min1, float max1, float min2, float max2) {
     return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 
-float segment1Start = 0.0;
 float segment2Start = 0.3333;
 float segment3Start = 0.6666;
 
@@ -71,7 +68,7 @@ void main() {
     }
 
     vec4 comp;
-    if (useDepthMap) {
+    if (faux3D) {
         vec4 texDepth = texture2D(depthMap, uvParallax);
         vec2 fake3d = vec2(uvParallax.x + (texDepth.r - 0.5) * (mousePosition.x + cos(time * 0.5) * 0.66) / faux3dThreshold.x, uvParallax.y + (texDepth.r - 0.5) * (mousePosition.y + sin(time * 0.5) * 0.66) / faux3dThreshold.y);
         comp = texture2D(map, mirrored(fake3d));

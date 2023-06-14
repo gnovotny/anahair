@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, MutableRefObject, useRef } from 'react'
+import { ForwardedRef, forwardRef, MutableRefObject, useEffect, useRef } from 'react'
 
 import { shaderMaterial } from '@react-three/drei'
 import { Color, extend, useFrame, useThree } from '@react-three/fiber'
@@ -6,8 +6,9 @@ import { Mesh, ShaderMaterial, Color as ThreeColor, Texture } from 'three'
 
 import { ScrollSceneChildProps } from '@/components/scrollrig/components/ScrollScene'
 
-// import Mouse from './Mouse'
 import { fragment, vertex } from './shaders'
+
+const MOUSE_LERP = 0.08
 
 export type PortalSceneProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   segments?: number
@@ -49,7 +50,7 @@ type PortalImageMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
   maskMap: Texture
   zoom?: number
   zoomOrigin?: number[]
-  useDepthMap?: boolean
+  faux3D?: boolean
 }
 
 declare global {
@@ -73,6 +74,7 @@ const PortalImageMaterialImpl = shaderMaterial(
 
     zoom: 1.5,
     zoomOrigin: [0.5, 0.5],
+    faux3D: true,
     faux3dThreshold: [65, 80],
     maskMaxScale: 7,
 
@@ -98,6 +100,7 @@ const PortalScene = forwardRef(
       maskTexture,
       portalTexture,
       faux3D = true,
+      scrollState,
       ...props
     }: Omit<PortalSceneProps, 'url'> & { scrollState?: ScrollSceneChildProps['scrollState'] },
     ref: ForwardedRef<Mesh>
@@ -109,33 +112,47 @@ const PortalScene = forwardRef(
     const planeBounds = Array.isArray(scale) ? [scale[0], scale[1]] : [scale, scale]
     const imageBounds = [texture!.image.width, texture!.image.height]
 
+    const mousePositionRef = useRef({ x: 0, y: 0, smoothX: 0, smoothY: 0 })
+
+    useEffect(() => {
+      if (!faux3D) return
+
+      const onMouseMove = (event: MouseEvent) => {
+        if (!portalImageMaterialRef.current) return
+
+        const pos = mousePositionRef.current
+        pos.x = event.clientX
+        pos.y = event.clientY
+      }
+
+      window.addEventListener('mousemove', onMouseMove)
+      return () => window.removeEventListener('mousemove', onMouseMove)
+    }, [faux3D])
+
     useFrame(() => {
       if (!portalImageMaterialRef.current) return
 
-      // handleMouseMove({
-      //   x: Mouse.x,
-      //   y: Mouse.y,
-      //   smoothX: Mouse.smoothX,
-      //   smoothY: Mouse.smoothY,
-      // })
+      const progress = scrollState?.progress ?? 0
+      portalImageMaterialRef.current.uniforms.progress.value = progress
 
-      portalImageMaterialRef.current.uniforms.progress.value = props.scrollState?.progress ?? 0
+      if (faux3D && progress > 1 / 3) {
+        const pos = mousePositionRef.current
+        pos.smoothX += (pos.x - pos.smoothX) * MOUSE_LERP
+        pos.smoothX = ((100 * (pos.smoothX + 0.01)) | 0) / 100
+
+        pos.smoothY += (pos.y - pos.smoothY) * MOUSE_LERP
+        pos.smoothY = ((100 * (pos.smoothY + 0.01)) | 0) / 100
+
+        const halfX = gl.domElement.offsetWidth / 2
+        const halfY = gl.domElement.offsetHeight / 2
+
+        // Convert to shader coords
+        const x = (halfX - pos.smoothX) / halfX
+        const y = (halfY - pos.smoothY) / halfY
+
+        portalImageMaterialRef.current.uniforms.mousePosition.value = [x, y]
+      }
     })
-
-    const handleMouseMove = (mouseCoords: any) => {
-      if (!portalImageMaterialRef.current) return
-
-      let { x, y, smoothX, smoothY } = mouseCoords
-
-      const halfX = gl.domElement.offsetWidth / 2
-      const halfY = gl.domElement.offsetHeight / 2
-
-      // Convert to shader coords
-      x = (halfX - smoothX) / halfX
-      y = (halfY - smoothY) / halfY
-
-      portalImageMaterialRef.current.uniforms.mousePosition.value = [x, y]
-    }
 
     return (
       <mesh
@@ -150,7 +167,7 @@ const PortalScene = forwardRef(
           map-colorSpace={gl.outputColorSpace}
           depthMap={depthTexture!}
           depthMap-colorSpace={gl.outputColorSpace}
-          useDepthMap={faux3D}
+          faux3D={faux3D}
           maskMap={maskTexture!}
           maskMap-colorSpace={gl.outputColorSpace}
           zoom={zoom}

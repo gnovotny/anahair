@@ -8,7 +8,7 @@ import Link from '@/components/ui/link'
 import { INFO } from '@/config'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { clamp, mapLinear } from '@/lib/utils/math'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 import { setStyles } from '@/lib/utils/style'
 
 import { useAddendumScroll } from './useAddendumScroll'

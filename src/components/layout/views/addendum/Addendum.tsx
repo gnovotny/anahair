@@ -13,7 +13,7 @@ import { ScrollCallbackProps } from '@/components/scrollrig/scrollbar/SmoothScro
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { useStore } from '@/lib/store'
 import { clamp, lerp, mapLinear } from '@/lib/utils/math'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 
 import { AddendumContactBlock } from './AddendumContactBlock'
 import { AddendumWordSplit } from './AddendumWordSplit'

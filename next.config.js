@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
-
   experimental: {
     optimizeCss: true,
     legacyBrowsers: false,

@@ -25,6 +25,11 @@ export const getMapStyles = (): MapTypeStyle[] => {
       stylers: [{ color: QUATERNARY_COLOR }, { visibility: 'on' }],
     },
     {
+      featureType: 'administrative',
+      elementType: 'labels.text.stroke',
+      stylers: [{ color: '#ffffff' }, { visibility: 'on' }, {weight: 4}],
+    },
+    {
       featureType: 'landscape',
       elementType: 'all',
       stylers: [{ color: PRIMARY_COLOR }, { visibility: 'on' }],
@@ -112,9 +117,9 @@ export const getMapStyles = (): MapTypeStyle[] => {
     { featureType: 'transit', elementType: 'all', stylers: [{ visibility: 'off' }] },
 
     {
-      featureType: 'transit.station',
+      featureType: 'transit.station.bus',
       elementType: 'all',
-      stylers: [{ visibility: 'off' }],
+      stylers: [{ visibility: 'on' }, { color: QUATERNARY_COLOR }],
     },
 
     {

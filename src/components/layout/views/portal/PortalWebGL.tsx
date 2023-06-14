@@ -4,24 +4,25 @@ import { useTexture } from '@react-three/drei'
 
 import { ScrollScene, UseCanvas, useImageAsTexture } from '@/components/scrollrig'
 import { ScrollSceneChildProps } from '@/components/scrollrig/components/ScrollScene'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { down, orientation } from '@/lib/utils/screens'
+import { useMediaQuery } from '@/lib/hooks'
+import { down, orientation } from '@/lib/utils/media-query'
 
 import { IMG_URLS } from './consts'
 import PortalScene from './scene/PortalScene'
 
 type PortalWebGLElementProps = {
-  containerEl: MutableRefObject<HTMLElement>
-  imgEl?: MutableRefObject<HTMLImageElement>
-  imgMobileEl?: MutableRefObject<HTMLImageElement>
-  imgDepthEl?: MutableRefObject<HTMLImageElement>
+  containerElRef: MutableRefObject<HTMLElement>
+  imgElRef?: MutableRefObject<HTMLImageElement>
+  imgSmallPortraitElRef?: MutableRefObject<HTMLImageElement>
+  imgDepthElRef?: MutableRefObject<HTMLImageElement>
 }
 
-const PortalWebGLRoot = ({ containerEl, ...imageProps }: PortalWebGLElementProps) => (
+const PortalWebGLRoot = ({ containerElRef, ...imageProps }: PortalWebGLElementProps) => (
   <UseCanvas>
     <ScrollScene
-      track={containerEl}
-      customYTransform={2}
+      track={containerElRef}
+      customPositioning
+      customScaleFactor={{ y: 1 / 2 }}
     >
       {(scrollProps: ScrollSceneChildProps) => (
         <PortalWebGL
@@ -33,30 +34,32 @@ const PortalWebGLRoot = ({ containerEl, ...imageProps }: PortalWebGLElementProps
   </UseCanvas>
 )
 
-const PortalWebGL = ({ imgEl, imgMobileEl, ...props }: Omit<PortalWebGLElementProps, 'containerEl'>) => {
-  const isSmallScreen = useMediaQuery(down('md'))
-  const isLandscapeScreen = useMediaQuery(orientation('landscape'))
+const PortalWebGL = ({
+  imgElRef,
+  imgSmallPortraitElRef,
+  ...props
+}: Omit<PortalWebGLElementProps, 'containerElRef'>) => {
+  const isSmallPortraitScreen = useMediaQuery([down('md'), orientation('portrait')])
   /* eslint-disable react-hooks/rules-of-hooks */
-  const texture =
-    !isSmallScreen || isLandscapeScreen
-      ? imgEl
-        ? useImageAsTexture(imgEl)
-        : useTexture(IMG_URLS.main)
-      : imgMobileEl
-      ? useImageAsTexture(imgMobileEl)
-      : useTexture(IMG_URLS.mainMobile)
+  const texture = !isSmallPortraitScreen
+    ? imgElRef
+      ? useImageAsTexture(imgElRef)
+      : useTexture(IMG_URLS.main)
+    : imgSmallPortraitElRef
+    ? useImageAsTexture(imgSmallPortraitElRef)
+    : useTexture(IMG_URLS.mainMobile)
   /* eslint-enable react-hooks/rules-of-hooks */
   const depthTexture = useTexture(IMG_URLS.depth)
-  const maskTexture = useTexture(isSmallScreen && !isLandscapeScreen ? IMG_URLS.maskMobile : IMG_URLS.mask)
+  const maskTexture = useTexture(isSmallPortraitScreen ? IMG_URLS.maskMobile : IMG_URLS.mask)
 
   return (
     <PortalScene
       texture={texture}
       depthTexture={depthTexture}
       maskTexture={maskTexture}
-      faux3D={!isSmallScreen}
-      zoom={isSmallScreen && !isLandscapeScreen ? 2.0 : 1.5}
-      zoomOrigin={isSmallScreen && !isLandscapeScreen ? [0.5, 0.2] : [0.5, 0.5]}
+      faux3D={!isSmallPortraitScreen}
+      zoom={isSmallPortraitScreen ? 2.0 : 1.5}
+      zoomOrigin={isSmallPortraitScreen ? [0.5, 0.2] : [0.5, 0.5]}
       {...props}
     />
   )

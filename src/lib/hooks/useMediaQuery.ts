@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react'
 
-import { isClient } from '@/lib/utils/common'
+import { matchMediaQuery, isClient, combineMediaQueries } from '@/lib/utils'
 
-const getMatch = (query: string) => {
-  return window.matchMedia(query)
-}
+const match = (query: string | string[]) =>
+  matchMediaQuery(Array.isArray(query) ? combineMediaQueries(...query) : query)
 
-const parseQueryString = (query: string) => {
-  return query.replaceAll('@media only screen and', '').trim()
-}
-
-export const useMediaQuery = (query: string, defaultState = false) => {
-  const parseAndMatch = (s: string) => getMatch(parseQueryString(s))
-  const [state, setState] = useState(isClient ? () => parseAndMatch(query).matches : defaultState)
+export const useMediaQuery = (query: string | string[], defaultState = false) => {
+  const [state, setState] = useState(isClient ? () => match(query).matches : defaultState)
 
   useEffect(() => {
     let mounted = true
-    const mql = parseAndMatch(query)
+    const mql = match(query)
 
     const onChange = () => {
       if (!mounted) return
-      setState(!!mql.matches)
+      setState(mql.matches)
     }
 
     if (mql.addEventListener) {

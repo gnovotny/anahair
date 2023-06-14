@@ -14,7 +14,7 @@ import Link from '@/components/ui/link'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { mapLinear } from '@/lib/utils/math'
 import { getStaticProps } from '@/lib/utils/page-data'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 
 const LINK_PROPS = {
   className: cn(

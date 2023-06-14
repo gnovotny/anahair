@@ -20,4 +20,11 @@ export const SWITZERLAND_BOUNDS = {
   south: 45.7769477403,
   west: 6.02260949059,
 }
+
+export const CUSTOM_BOUNDS = {
+  east: 8.6,
+  north: 47.6,
+  south: 47.1,
+  west: 8.5,
+}
 export const MARKER_ICON_URL = '/images/ana_map_marker.svg'

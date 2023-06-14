@@ -21,7 +21,7 @@ import useIsHome from '@/lib/hooks/useIsHome'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { useStore } from '@/lib/store'
 import { clamp } from '@/lib/utils/math'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 
 const LINK_PROPS: LinkProps = {
   className: 'lowercase',

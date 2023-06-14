@@ -1,6 +1,6 @@
 import React, { memo, MouseEvent, useCallback } from 'react'
 
-import { m, useMotionValue } from 'framer-motion'
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useTranslation } from 'next-i18next'
 import { useInView } from 'react-intersection-observer'
@@ -11,8 +11,8 @@ import { useWindowSize } from '@/components/scrollrig/hooks/useWindowSize'
 import { ScrollCallbackProps } from '@/components/scrollrig/scrollbar/SmoothScrollbar'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { useStore } from '@/lib/store'
-import { clamp, lerp, mapLinear } from '@/lib/utils/math'
-import { down } from '@/lib/utils/screens'
+import { clamp, mapLinear } from '@/lib/utils'
+import { down } from '@/lib/utils/media-query'
 
 const Map = dynamic(() => import('@/components/common/map').then((m) => m.default), {
   ssr: false,
@@ -25,8 +25,16 @@ export const AddendumContactBlock = memo(() => {
 
   const { ref: mapContainerRef, inView: mapContainerInView } = useInView({ triggerOnce: true })
 
-  const gMapX = useMotionValue(0)
-  const gMapY = useMotionValue(0)
+  const vWidth = isFinite(wWidth) ? wWidth : 100
+  const vHeight = isFinite(wHeight) ? wHeight : 100
+
+  const mouseX = useMotionValue(vWidth / 2)
+  const mouseY = useMotionValue(vHeight * (screenMdDown ? 0.5 : 0.75))
+  const mouseSpringX = useSpring(mouseX, { stiffness: 300, damping: 100 })
+  const mouseSpringY = useSpring(mouseY, { stiffness: 300, damping: 100 })
+  const mapInnerX = useTransform(mouseSpringX, [0, vWidth], ['-5vw', '5vw'])
+  const mapInnerY = useTransform(mouseSpringY, [screenMdDown ? 0 : vHeight / 2, vHeight], ['-5vw', '5vw'])
+  const mapOuterY = useMotionValue(0)
 
   const isActive = useStore(({ addendumActive }) => addendumActive)
 
@@ -40,25 +48,20 @@ export const AddendumContactBlock = memo(() => {
           mapLinear(limit - wHeight / (screenMdDown ? 1 : 2), limit, scroll, wHeight / 4, 0),
           wHeight / 4
         )
-        gMapY.set(screenMdDown ? newGMapY : lerp(gMapY.get(), newGMapY, 0.1))
+        mapOuterY.set(newGMapY)
       }
     },
-    [isActive, screenMdDown, wHeight, gMapY]
+    [isActive, wHeight, screenMdDown, mapOuterY]
   )
 
   useLenisScroll(handleScroll)
 
   const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      const { clientX, clientY } = e
-      const offsetFactor = 30
-      const newX = (clientX - wWidth / 2) / offsetFactor
-      const newY = (clientY - wHeight / 2) / offsetFactor
-
-      gMapX.set(lerp(gMapX.get(), newX, 0.1))
-      gMapY.set(lerp(gMapY.get(), newY, 0.1))
+    ({ clientX, clientY }: MouseEvent) => {
+      mouseX.set(clientX)
+      mouseY.set(clientY)
     },
-    [gMapX, gMapY, wHeight, wWidth]
+    [mouseX, mouseY]
   )
 
   return (
@@ -73,20 +76,25 @@ export const AddendumContactBlock = memo(() => {
         </div>
       </div>
       <div className='absolute inset-0 w-full h-full overflow-hidden'>
-        <div className='relative w-full h-full'>
+        <m.div
+          className='relative w-full h-full will-change-[transform]'
+          style={{
+            y: mapOuterY,
+          }}
+        >
           <m.div
-            className='w-full h-full md:w-[110%] md:h-[110%] md:absolute md:inset-[-5%] will-change-[transform]'
+            className='w-full h-full md:w-[110vw] md:h-[calc(100%+10vw)] md:absolute md:inset-[-5vw] will-change-[transform]'
             onMouseMove={(e) => handleMouseMove(e)}
             style={{
               transformStyle: 'preserve-3d',
               backfaceVisibility: 'hidden',
-              x: gMapX,
-              y: gMapY,
+              x: mapInnerX,
+              y: mapInnerY,
             }}
           >
             {mapContainerInView && <Map />}
           </m.div>
-        </div>
+        </m.div>
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ import { useLenisScroll } from '@/components/scrollrig/hooks/useLenisScroll'
 import { useWindowSize } from '@/components/scrollrig/hooks/useWindowSize'
 import { ScrollCallbackProps } from '@/components/scrollrig/scrollbar/SmoothScrollbar'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { down } from '@/lib/utils/screens'
+import { down } from '@/lib/utils/media-query'
 
 type CoverImageProps = Omit<ImageProps, 'alt'> & { alt?: string }
 

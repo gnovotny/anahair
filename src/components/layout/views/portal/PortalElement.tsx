@@ -1,34 +1,36 @@
 import React, { memo, MutableRefObject, useRef } from 'react'
 
 import cn from 'clsx'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
 import { WEBGL_ENABLED, PORTAL_WEBGL_ENABLED } from '@/config'
 
 import { IMG_URLS } from './consts'
+import PortalWebGL from './PortalWebGL'
 
-const PortalWebGLElement = dynamic(() => import('./PortalWebGL').then((m) => m.default), {
-  ssr: false,
-})
+// const PortalWebGL = dynamic(() => import('./PortalWebGL').then((m) => m.default), {
+//   ssr: false,
+// })
+
+const USE_WEBGL = WEBGL_ENABLED && PORTAL_WEBGL_ENABLED
 
 const PortalElement = ({ className }: { className?: string }) => {
-  const containerElRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>
+  const rootElRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>
   const imgElRef = useRef<HTMLImageElement>(null) as MutableRefObject<HTMLImageElement>
-  const imgMobileElRef = useRef<HTMLImageElement>(null) as MutableRefObject<HTMLImageElement>
+  const imgSmallPortraitElRef = useRef<HTMLImageElement>(null) as MutableRefObject<HTMLImageElement>
 
   return (
     <section
-      ref={containerElRef}
+      ref={rootElRef}
       className={cn(
         'relative z-10 w-full h-[200vh] mt-[-20vh] pointer-events-none',
         {
-          '!h-[150vh]': !WEBGL_ENABLED || !PORTAL_WEBGL_ENABLED,
+          '!h-[150vh]': !USE_WEBGL,
         },
         className
       )}
     >
-      <div className={cn('sticky top-0 w-full h-screen', WEBGL_ENABLED && PORTAL_WEBGL_ENABLED && 'hidden')}>
+      <div className={cn('sticky top-0 w-full h-screen', USE_WEBGL && 'hidden')}>
         <div className='relative w-full h-full'>
           <Image
             ref={imgElRef}
@@ -40,7 +42,7 @@ const PortalElement = ({ className }: { className?: string }) => {
             alt=''
           />
           <Image
-            ref={imgMobileElRef}
+            ref={imgSmallPortraitElRef}
             fill
             className='object-cover landscape:hidden md:hidden'
             loading='eager'
@@ -50,11 +52,11 @@ const PortalElement = ({ className }: { className?: string }) => {
           />
         </div>
       </div>
-      {WEBGL_ENABLED && PORTAL_WEBGL_ENABLED && (
-        <PortalWebGLElement
-          containerEl={containerElRef}
-          imgEl={imgElRef}
-          imgMobileEl={imgMobileElRef}
+      {USE_WEBGL && (
+        <PortalWebGL
+          containerElRef={rootElRef}
+          imgElRef={imgElRef}
+          imgSmallPortraitElRef={imgSmallPortraitElRef}
         />
       )}
     </section>

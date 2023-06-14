@@ -35,7 +35,11 @@ interface ScrollScene {
   as?: string
   priority?: number
 
-  customYTransform?: number
+  customPositioning?: boolean
+  customScaleFactor?: {
+    x?: number
+    y?: number
+  }
 }
 
 /**
@@ -56,7 +60,8 @@ const ScrollSceneImpl = ({
   debug = false,
   as = 'scene',
   priority = config.PRIORITY_SCISSORS,
-  customYTransform,
+  customPositioning,
+  customScaleFactor,
   ...props
 }: ScrollScene) => {
   const inlineSceneRef = useCallback((node: any) => {
@@ -86,10 +91,10 @@ const ScrollSceneImpl = ({
 
       if (scene.visible) {
         // move scene
-        if (!customYTransform) {
+        if (!customPositioning) {
           scene.position.y = position.y
+          scene.position.x = position.x
         }
-        scene.position.x = position.x
 
         if (scissor) {
           renderScissor({
@@ -110,8 +115,11 @@ const ScrollSceneImpl = ({
   )
 
   const customScale = useMemo(
-    () => (!scale || !customYTransform ? scale : vecn.vec3(scale.x, scale.y / customYTransform, scale.z)),
-    [scale, customYTransform]
+    () =>
+      !scale || !customScaleFactor
+        ? scale
+        : vecn.vec3(scale.x * (customScaleFactor?.x ?? 1), scale.y * (customScaleFactor?.y ?? 1), scale.z),
+    [scale, customScaleFactor]
   )
 
   const content = (
