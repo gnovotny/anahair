@@ -11,11 +11,11 @@ import { clamp, mapLinear } from '@/lib/utils/math'
 import { down } from '@/lib/utils/media-query'
 import { setStyles } from '@/lib/utils/style'
 
-import { useAddendumScroll } from './useAddendumScroll'
+import { useAddendumScroll } from '../useAddendumScroll'
 
 const WITH_BLUR = false
 
-export const AddendumWordSplitLink: FC<PropsWithChildren<{ href: string }>> = ({ children, href }) => (
+const AddendumWordSplitLink: FC<PropsWithChildren<{ href: string }>> = ({ children, href }) => (
   <Link
     href={href}
     className={cn('font-serif font-bold transition-colors duration-[1300ms] decoration-1 underline-offset-4')}
@@ -24,13 +24,12 @@ export const AddendumWordSplitLink: FC<PropsWithChildren<{ href: string }>> = ({
         'after:h-[.125rem] before:h-[.125rem] md:after:h-[.175rem] md:before:h-[.175rem] xl:after:h-[.225rem] xl:before:h-[.225rem] after:bottom-[.15rem] before:bottom-[.15rem] md:after:bottom-[.1rem] md:before:bottom-[.1rem] xl:after:bottom-[.05rem] xl:before:bottom-[.05rem]'
       ),
     }}
-    // style={{ whiteSpace: 'pre' }}
   >
     {children}
   </Link>
 )
 
-export const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
+const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
   const screenMdDown = useMediaQuery(down('md'))
 
   const elRef = useRef<HTMLDivElement | null>(null)
@@ -73,7 +72,6 @@ export const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = 
 
         return (
           <span
-            // style={{ whiteSpace: 'pre' }}
             className='relative inline-flex '
             key={`word-${i}-wrapper`}
           >
@@ -161,3 +159,5 @@ export const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = 
     </div>
   )
 }
+
+export default AddendumWordSplit

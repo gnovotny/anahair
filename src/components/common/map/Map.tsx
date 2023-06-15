@@ -6,23 +6,14 @@ import { INFO, GOOGLE_MAPS_API_KEY } from '@/config'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { down } from '@/lib/utils/media-query'
 
-import {
-  CENTER_LARGE,
-  CENTER_SMALL, CUSTOM_BOUNDS,
-  LAT,
-  LNG,
-  MARKER_ICON_URL,
-  SWITZERLAND_BOUNDS,
-  ZOOM_LARGE,
-  ZOOM_SMALL,
-} from './consts'
+import { CENTER_LARGE, CENTER_SMALL, CUSTOM_BOUNDS, LAT, LNG, MARKER_ICON_URL, ZOOM_LARGE, ZOOM_SMALL } from './consts'
 import { getMapStyles } from './utils'
 
 const Map = memo(({ onLoad: customOnLoad }: { onLoad?: (map: google.maps.Map) => void }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    // preventGoogleFontsLoading: true,
+    preventGoogleFontsLoading: true,
   })
 
   const screenMdDown = useMediaQuery(down('md'))
@@ -38,10 +29,7 @@ const Map = memo(({ onLoad: customOnLoad }: { onLoad?: (map: google.maps.Map) =>
 
   return isLoaded ? (
     <GoogleMapLib
-      mapContainerStyle={{
-        width: '100%',
-        height: 'calc(100% + 20px)',
-      }}
+      mapContainerClassName='w-full h-[calc(100%+20px)]'
       center={screenMdDown ? CENTER_SMALL : CENTER_LARGE}
       zoom={screenMdDown ? ZOOM_SMALL : ZOOM_LARGE}
       onLoad={onLoad}
@@ -51,7 +39,6 @@ const Map = memo(({ onLoad: customOnLoad }: { onLoad?: (map: google.maps.Map) =>
         styles: getMapStyles(),
         disableDefaultUI: true,
         gestureHandling: screenMdDown ? 'none' : 'greedy',
-        // gestureHandling: 'greedy',
         restriction: {
           latLngBounds: CUSTOM_BOUNDS,
         },
@@ -70,7 +57,6 @@ const Map = memo(({ onLoad: customOnLoad }: { onLoad?: (map: google.maps.Map) =>
           text: 'Ana Hair',
           color: '#233347',
           className: '-translate-y-[3rem] font-black !text-xl text-primary gm-ana-label',
-
         }}
       />
     </GoogleMapLib>

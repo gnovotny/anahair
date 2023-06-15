@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 
 import cn from 'clsx'
 import { m, useMotionValue } from 'framer-motion'
-import { useTranslation } from 'next-i18next'
 
 import img from '@/assets/art-hair.jpg'
 import CoverImage from '@/components/common/cover-image'
@@ -13,8 +12,8 @@ import { ScrollCallbackProps } from '@/components/scrollrig/scrollbar/SmoothScro
 import Link from '@/components/ui/link'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { mapLinear } from '@/lib/utils/math'
-import { getStaticProps } from '@/lib/utils/page-data'
 import { down } from '@/lib/utils/media-query'
+import { getStaticProps } from '@/lib/utils/page-data'
 
 const LINK_PROPS = {
   className: cn(
@@ -28,8 +27,6 @@ const LINK_PROPS = {
 }
 
 export default function IndexPage() {
-  const { t } = useTranslation()
-
   const screenMdDown = useMediaQuery(down('md'))
 
   const { height: windowHeight } = useWindowSize()

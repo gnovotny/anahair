@@ -2,7 +2,6 @@ import React, { memo, MouseEvent, useCallback } from 'react'
 
 import { m, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useTranslation } from 'next-i18next'
 import { useInView } from 'react-intersection-observer'
 
 import { Contact, OpeningHours } from '@/components/common/info'
@@ -18,8 +17,7 @@ const Map = dynamic(() => import('@/components/common/map').then((m) => m.defaul
   ssr: false,
 })
 
-export const AddendumContactBlock = memo(() => {
-  const { t } = useTranslation()
+const AddendumContact = memo(() => {
   const { height: wHeight, width: wWidth } = useWindowSize()
   const screenMdDown = useMediaQuery(down('md'))
 
@@ -39,7 +37,7 @@ export const AddendumContactBlock = memo(() => {
   const isActive = useStore(({ addendumActive }) => addendumActive)
 
   const handleScroll = useCallback(
-    ({ scroll, direction, limit }: ScrollCallbackProps) => {
+    ({ scroll, limit }: ScrollCallbackProps) => {
       if (!isActive) return
 
       if (scroll > limit - wHeight / (screenMdDown ? 1 : 2)) {
@@ -99,3 +97,5 @@ export const AddendumContactBlock = memo(() => {
     </div>
   )
 })
+
+export default AddendumContact

@@ -27,7 +27,7 @@ export const getMapStyles = (): MapTypeStyle[] => {
     {
       featureType: 'administrative',
       elementType: 'labels.text.stroke',
-      stylers: [{ color: '#ffffff' }, { visibility: 'on' }, {weight: 4}],
+      stylers: [{ color: '#ffffff' }, { visibility: 'on' }, { weight: 4 }],
     },
     {
       featureType: 'landscape',

@@ -20,7 +20,7 @@ Employed libraries include:
 
 ## Features
 
-- custom WebGL frag shader [frag shader](./src/components/layout/views/portal/scene/shaders/fragment.glsl)
+- custom WebGL [frag shader](./src/components/layout/views/portal/scene/shaders/fragment.glsl)
 - sporadic use of pure CSS for non-trivial animations
 - tracks DOM elements and draws Three.js objects in their place using [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig)
 - Opinionated lint config:
@@ -31,7 +31,7 @@ Employed libraries include:
 ## TODO
 
 - [x] portal element: fix faux-3d effect on pointer move
-- [ ] footer element: mobile browser navigation bars scrolling issue
+- [x] footer element: mobile browser navigation bars scrolling issue
 - [ ] performance improvements
 - [x] refactor frag shader
 
