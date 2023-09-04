@@ -65,7 +65,7 @@ const AddendumContact = memo(() => {
   return (
     <div
       ref={mapContainerRef}
-      className='sticky bottom-0 flex flex-col-reverse w-full h-screen md:w-screen md:flex-row md:h-[50vh] bg-secondary'
+      className='sticky bottom-0 flex flex-col-reverse w-full h-screen md:w-screen md:flex-row md:h-[50vh] bg-quaternary md:bg-secondary'
     >
       <div className='relative flex w-full overflow-hidden pointer-events-none z-[1] h-2/3 landscape:h-full md:h-full landscape:w-1/2 md:w-1/2 xl:w-1/2 xl:items-center xl:justify-center p-9 landscape:p-6 md:!p-12 md:high-dpi:!p-6 xl:!pr-12 bg-[linear-gradient(0deg,rgba(35,51,71,1)35%,rgba(35,51,71,0))] landscape:bg-[linear-gradient(90deg,rgba(35,51,71,1)35%,rgba(35,51,71,0))] md:!bg-[linear-gradient(90deg,rgba(35,51,71,1)35%,rgba(35,51,71,0))] lg:!bg-[linear-gradient(90deg,rgba(35,51,71,1)25%,rgba(35,51,71,0))]'>
         <div className='flex flex-col justify-end w-full h-full text-xl font-medium landscape:text-lg md:!text-xl md:high-dpi:!text-base md:very-high-dpi:!text-sm md:justify-between items-between md:items-start space-y-6 landscape:space-y-3 md:!space-y-6 text-secondary md:max-w-[30vw] xl:max-w-2xl'>

@@ -82,6 +82,7 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = ({ children, pageProps }) => 
           </main>
         )}
       </SmoothScrollbar>
+      <div className='fixed bottom-0 left-0 w-full h-[50vh] md:hidden bg-quaternary z-[-1]' />
     </>
   )
 }

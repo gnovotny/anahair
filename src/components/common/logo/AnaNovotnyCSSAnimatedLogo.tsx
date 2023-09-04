@@ -26,7 +26,7 @@ const AnaNovotnyCSSAnimatedLogo = ({ className = '', triggered = false, delay = 
     viewBox='0 0 850.12 136.34'
     xmlns='http://www.w3.org/2000/svg'
     className={cn(
-      'overflow-visible stroke-current transition-[opacity,stroke-width,filter,fill] will-change-[opacity,stroke-width,filter,fill] opacity-[0.15] stroke-[10px] fill-primary',
+      'overflow-visible stroke-current transition-[opacity,stroke-width,filter,fill] will-change-[opacity,stroke-width,filter,fill] opacity-[0.15] stroke-[10px]',
       className,
       { 'blur-0 fill-current opacity-100 stroke-0': triggered }
     )}
