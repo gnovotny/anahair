@@ -61,13 +61,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--quaternary);
+  background-color: var(--primary);
   color: var(--text-primary);
   overscroll-behavior-x: none;
-
-  @screen md {
-    background-color: var(--primary);
-  }
 }
 
 html {
@@ -87,11 +83,7 @@ body {
 }
 
 main {
-  background-color: var(--quaternary);
-
-  @screen md {
-    background-color: var(--primary);
-  }
+  background-color: var(--primary);
 }
 
 a {
