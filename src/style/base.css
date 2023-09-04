@@ -68,7 +68,6 @@ body {
   @screen md {
     background-color: var(--primary);
   }
-
 }
 
 html {
@@ -88,7 +87,11 @@ body {
 }
 
 main {
-  background-color: var(--primary);
+  background-color: var(--quaternary);
+
+  @screen md {
+    background-color: var(--primary);
+  }
 }
 
 a {
