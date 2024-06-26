@@ -34,5 +34,6 @@
   "error_404_not_found_title": "Seite nicht gefunden",
   "error_404_not_found_description": "Die Seite existiert nicht",
   "error_500_something_went_wrong_title": "Etwas ist schiefgelaufen",
-  "error_500_something_went_wrong_description": "Etwas ist schiefgelaufen. Versuche es später erneut."
+  "error_500_something_went_wrong_description": "Etwas ist schiefgelaufen. Versuche es später erneut.",
+  "book_now": "Jetzt buchen"
 }

@@ -25,7 +25,7 @@ const Link: LinkType = forwardRef(
     const isInternal = !!href && (typeof href !== 'string' || href.startsWith('/'))
     const isHashOrMailOrTelOrClickHandler =
       !isInternal &&
-      ((href && (href.startsWith('tel') || href.startsWith('mailto') || href.startsWith('#'))) || onClick)
+      ((href && (href.startsWith('tel') || href.startsWith('mailto') || href.startsWith('#'))) || (!href && onClick))
 
     const contents = (
       <>

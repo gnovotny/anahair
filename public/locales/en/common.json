@@ -34,5 +34,6 @@
   "error_404_not_found_title": "Page not found",
   "error_404_not_found_description": "The page you requested does not exist",
   "error_500_something_went_wrong_title": "Something went wrong",
-  "error_500_something_went_wrong_description": "Something went wrong. Please try again later."
+  "error_500_something_went_wrong_description": "Something went wrong. Please try again later.",
+  "book_now": "Book now"
 }

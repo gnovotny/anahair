@@ -46,8 +46,8 @@ const PortalWebGL = ({
       ? useImageAsTexture(imgElRef)
       : useTexture(IMG_URLS.main)
     : imgSmallPortraitElRef
-    ? useImageAsTexture(imgSmallPortraitElRef)
-    : useTexture(IMG_URLS.mainMobile)
+      ? useImageAsTexture(imgSmallPortraitElRef)
+      : useTexture(IMG_URLS.mainMobile)
   /* eslint-enable react-hooks/rules-of-hooks */
   const depthTexture = useTexture(IMG_URLS.depth)
   const maskTexture = useTexture(isSmallPortraitScreen ? IMG_URLS.maskMobile : IMG_URLS.mask)

@@ -8,6 +8,7 @@ export const INFO = {
   tel: '+41 44 550 44 77',
   email: 'info@ananovotny.ch',
   instagramUrl: 'https://www.instagram.com/ananovotnyhair',
+  bookingUrl: 'https://salonkee.ch/salon/ana-novotny-hair',
 }
 
 export const CANONICAL_URL = 'https://www.ananovotny.ch'

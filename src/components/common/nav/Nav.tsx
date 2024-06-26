@@ -41,6 +41,10 @@ const Nav = ({ className = '', itemClassName = '', t, children, linkProps }: Nav
       href: INFO.instagramUrl,
       label: 'Instagram',
     },
+    {
+      href: INFO.bookingUrl,
+      label: t('book_now'),
+    },
   ]
 
   return (

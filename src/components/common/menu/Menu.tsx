@@ -87,6 +87,14 @@ const Menu: FC<MenuProps> = ({ t, open, onClose, onOpenInfo }) => {
           >
             <span className={s.label}>Instagram</span>
           </Link>
+          <Link
+            href={INFO.bookingUrl}
+            className={cn(s.link, s.sixth)}
+            onClick={onClose}
+            underlined={false}
+          >
+            <span className={s.label}>{t('book_now')}</span>
+          </Link>
         </div>
         <div className={cn(s.secondary)}>
           <LangSwitcherMinimal
