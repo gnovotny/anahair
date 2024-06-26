@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 import { ResizeObserver as Polyfill } from '@juggle/resize-observer'
 import { Canvas, Props } from '@react-three/fiber'
-import { parse } from 'query-string'
+import queryString from 'query-string'
 
 import { config } from '../config'
 import { useLayoutEffect } from '../hooks/useIsomorphicLayoutEffect'
@@ -60,7 +60,7 @@ const GlobalCanvasImpl = ({
     // }
 
     // Querystring overridess
-    const qs = parse(window.location.search)
+    const qs = queryString.parse(window.location.search)
 
     // show debug statements
     if (debug || typeof qs.debug !== 'undefined') {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 import { ResizeObserver as Polyfill } from '@juggle/resize-observer'
-import pkg from 'debounce'
+import debounceFn from 'debounce'
 
 const isBrowser = typeof window !== 'undefined'
 export interface WindowSize {
@@ -48,7 +48,7 @@ export function useWindowSize({ debounce = 0 }: ConfigProps = {}) {
       }
     }
 
-    const debouncedResize = pkg.debounce(handleResize, debounce)
+    const debouncedResize = debounceFn(handleResize, debounce)
 
     // Add event listener
     const ResizeObserver = window.ResizeObserver || Polyfill

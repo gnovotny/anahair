@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, ReactElement, forwardRef, useImperativeHandle } from 'react'
 
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 
 import { useLayoutEffect } from '../hooks/useIsomorphicLayoutEffect'
 import { useCanvasStore } from '../store'
@@ -68,7 +68,9 @@ const SmoothScrollbarImpl = (
     start: () => lenis.current?.start(),
     stop: () => lenis.current?.stop(),
     on: (event: string, cb: ScrollCallback) => lenis.current?.on(event, cb),
+    // @ts-expect-error emit is private
     notify: () => lenis.current?.emit(), // backwards compatible
+    // @ts-expect-error emit is private
     emit: () => lenis.current?.emit(),
     scrollTo: (target: ScrollToTarget, props: ScrollToConfig) => lenis.current?.scrollTo(target, props),
     raf: (time: number) => lenis.current?.raf(time),
@@ -180,6 +182,7 @@ const SmoothScrollbarImpl = (
         },
         onScroll: (cb: ScrollCallback) => {
           lenis.current?.on('scroll', cb)
+          // @ts-expect-error emit is private
           lenis.current?.emit() // send current scroll to new subscriber
           return () => lenis.current?.off('scroll', cb)
         },
@@ -191,6 +194,7 @@ const SmoothScrollbarImpl = (
     }
 
     // fire our internal scroll callback to update globalState
+    // @ts-expect-error emit is private
     lenis.current?.emit()
     return () => {
       lenis.current?.off('scroll', _onScroll)

@@ -81,7 +81,7 @@ const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = ({ chil
                 'blur-sm transition-[opacity,filter] will-change-[opacity,filter]': WITH_BLUR,
               })}
               key={`word-${i}`}
-              ref={(el) => (wordsRef.current[i] = el)}
+              ref={(el) => { wordsRef.current[i] = el }}
             >
               {fullContent}{' '}
             </span>
@@ -89,7 +89,7 @@ const AddendumWordSplit: FC<PropsWithChildren<{ className?: string }>> = ({ chil
               style={{ whiteSpace: 'pre' }}
               className='absolute inline-flex items-center justify-center -z-10 text-[#67676730] text-quinary'
               key={`word-${i}-alt`}
-              ref={(el) => (altWordsRef.current[i] = el)}
+              ref={(el) => { altWordsRef.current[i] = el }}
             >
               {content}{' '}
             </span>
