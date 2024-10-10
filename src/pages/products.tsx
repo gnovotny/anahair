@@ -9,6 +9,7 @@ import DavinesSvg from '@/assets/davines.svg'
 import KMSvg from '@/assets/km.svg'
 import img from '@/assets/products.jpg'
 import ShueUemuraSvg from '@/assets/shu-uemura.svg'
+import TokioSvg from '@/assets/tokio-inkarami.svg'
 import CoverImage from '@/components/common/cover-image'
 import { buildStaticPropsGetterWithTitle } from '@/lib/utils/page-data'
 
@@ -34,6 +35,12 @@ const PRODUCTS: ProductProps[] = [
     title: 'Corinne',
     Cmp: CorinneSvg,
   },
+  {
+    href: 'https://tokio-my.com/',
+    title: 'Tokio Inkarami',
+    Cmp: TokioSvg,
+  },
+
 ]
 
 type ProductProps = {
